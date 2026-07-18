@@ -68,16 +68,16 @@ Mapping: `00-contracts/lexicons/com/etzhayyim/watari/MIGRATION-NOTES.md`.
 
 ## Cells
 
-- `cell:watari.analyze` → `methods/analyze.py` (stdlib only). Pipeline:
+- `cell:watari.analyze` → `src/watari/methods/analyze.cljc` (stdlib only). Pipeline:
   classify → latest as-of fix per craft → lane/corridor load (by kind) → chokepoint transit →
   approach congestion → freshness tail. Aggregate-first. Idempotent; rerun to regenerate `out/`.
-- `cell:watari.ingest` → `methods/ingest.py` (R0 stub) — AISStream/OpenSky public batch →
+- `cell:watari.ingest` → `src/watari/methods/ingest.cljc` (R0 stub) — AISStream/OpenSky public batch →
   normalize → dedup-merge. Live fetch G7-gated.
-- `cell:watari.autorun` → `methods/autorun.py` (+ `methods/kotoba.py`). The autonomous
+- `cell:watari.autorun` → `src/watari/methods/autorun.cljc` (+ `src/watari/methods/kotoba.cljc`). The autonomous
   Murakumo-fleet heartbeat — the same shape shionome/ipaddress/yabai/sukashi/watatsuna use. Each
   cycle observes the OFFLINE merged graph → classify → analyze → **persists a content-addressed
   transaction** (graph datoms + derived `:movement/*`) to the append-only **local** kotoba Datom
-  log (`methods/kotoba.py`), linking the previous tx's CID into a verifiable commit-DAG.
+  log (`src/watari/methods/kotoba.cljc`), linking the previous tx's CID into a verifiable commit-DAG.
   Deterministic / resume-safe; NO external I/O. **G2/G4 hold by construction**: only aggregate
   `:movement/*` lane/chokepoint/approach density is representable — no per-craft follow feed and
   no person/owner/passenger/crew attr (a craft is a craft, never a person). The chokepoint-transit
@@ -85,12 +85,12 @@ Mapping: `00-contracts/lexicons/com/etzhayyim/watari/MIGRATION-NOTES.md`.
   Fleet cells `watari_craft_ingest` (cron 38) + `watari_situation_weave` (cron 43) +
   `watari_situation_persist` (cron 48) on `simeon` (co-located with watatsuna — the 海/空 path
   trilogy) — see `50-infra/murakumo/fleet.toml`. Live AIS/ADS-B ingest + the live-node push stay
-  Council + operator gated (G7). Invariants guarded by `methods/test_autorun.py` (commit-DAG
+  Council + operator gated (G7). Invariants guarded by `src/watari/methods/test_autorun.cljc` (commit-DAG
   verify, tamper-detect, determinism, append-only, derived-flagging, **G4 no-person-tracking**,
   no-external-I/O).
 
   ```bash
-  python3 methods/autorun.py --cycles 3 --fresh   # AUTONOMOUS heartbeat → LOCAL kotoba Datom log
+  bb -m watari.methods.autorun.cljc --cycles 3 --fresh   # AUTONOMOUS heartbeat → LOCAL kotoba Datom log
   ```
 
 ## Lexicons (kotoba-native)

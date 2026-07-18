@@ -1,0 +1,2 @@
+{:repository/id "com-etzhayyim-watari" :repository/type :actor :actor/id "watari"
+ :actor/glyph "渡り" :canonical-format :edn :wire-formats #{:json :json-ld :bpmn}}

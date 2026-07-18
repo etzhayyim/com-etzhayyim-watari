@@ -4,5 +4,8 @@
  :graph-type "com.etzhayyim.watari.graph"
  :published  "2026-06-28"
  :bundle [["data" "data"]
+          ["wire" "wire"]
+          ["schema.edn" "schema.edn"]
+          ["manifest.edn" "manifest.edn"]
           [".well-known/did.json" "did.json"]
           ["README.md" "README.md"]]}

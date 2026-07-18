@@ -407,11 +407,7 @@
      "CLI entry: analyze seed EDN → out/intel-report.md + out/movement-situation.kotoba.edn."
      [& argv]
      (let [argv (vec argv)
-           here (let [f (when (and *file* (not (str/blank? *file*))) (clojure.java.io/file *file*))
-                      pp (some-> f .getAbsoluteFile .getParentFile .getParentFile)]
-                  (if (and pp (.isDirectory (clojure.java.io/file pp "data")))
-                    pp
-                    (clojure.java.io/file "20-actors" "watari")))
+           here (clojure.java.io/file ".")
            seed (if (and (seq argv) (not (str/starts-with? (first argv) "--")))
                   (clojure.java.io/file (first argv))
                   (clojure.java.io/file here "data" "seed-craft-graph.kotoba.edn"))

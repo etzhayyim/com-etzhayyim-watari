@@ -21,19 +21,18 @@
   it asserts them. No-server-key + Murakumo-only (G6) + outward-gating (G7) are manifest-level."
   (:require [clojure.test :refer [deftest is run-tests]]
             [clojure.string :as str]
+            [clojure.edn :as edn]
             [cheshire.core :as json]))
 
 #?(:clj
    (do
-     (def ^:private here (.getParentFile (java.io.File. ^String *file*)))      ;; methods/
-     (def ^:private actor-dir (.getParentFile here))                          ;; watari/
-     (def ^:private root (.getParentFile (.getParentFile actor-dir)))          ;; repo root
+     (def ^:private actor-dir (java.io.File. "."))
      (def ^:private lexdir
-       (java.io.File. root "00-contracts/lexicons/com/etzhayyim/watari"))
+       (java.io.File. actor-dir "wire/lexicons"))
      (defn- lex [name]
        (json/parse-string (slurp (java.io.File. lexdir (str name ".json")))))
      (defn- manifest []
-       (json/parse-string (slurp (java.io.File. actor-dir "manifest.jsonld"))))))
+       (edn/read-string (slurp (java.io.File. actor-dir "manifest.edn"))))))
 
 (defn- props-of [doc]
   (let [main (get-in doc ["defs" "main"])]
@@ -45,7 +44,7 @@
                    main]))))
 (defn- enum-of [doc field] (set (get-in (props-of doc) [field "enum"])))
 (defn- gate-map []
-  (let [g (get (manifest) "gates")] (or (get g "gates") g)))
+  (into {} (map (fn [g] [(get g :gate/id) (get g :gate/rule)])) (:actor/gates (manifest))))
 (defn- gate-text [g] (str/lower-case (str (get (gate-map) g))))
 
 (def SOURCING #{"authoritative" "representative" "synthesized"})

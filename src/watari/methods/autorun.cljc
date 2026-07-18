@@ -29,8 +29,8 @@
 
 (def base-as-of 20260608)
 
-#?(:clj (def here (-> *file* io/file .getAbsoluteFile .getParentFile)))
-#?(:clj (def data (when here (io/file (.getParentFile here) "data"))))
+#?(:clj (def here (io/file "src" "watari" "methods")))
+#?(:clj (def data (io/file "data")))
 #?(:clj (def merged (when data (io/file data "craft-graph.merged.kotoba.edn"))))
 #?(:clj (def seed (when data (io/file data "seed-craft-graph.kotoba.edn"))))
 #?(:clj (def log-default (when data (io/file data "watari.datoms.kotoba.edn"))))

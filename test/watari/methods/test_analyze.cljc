@@ -15,7 +15,7 @@
             [clojure.java.io :as io]
             [watari.methods.analyze :as analyze]))
 
-(def actor-dir (-> *file* io/file .getParentFile .getParentFile))
+(def actor-dir (io/file "."))
 (def seed (io/file actor-dir "data" "seed-craft-graph.kotoba.edn"))
 
 (defn load*

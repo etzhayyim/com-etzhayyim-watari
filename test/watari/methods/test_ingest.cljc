@@ -11,8 +11,7 @@
             [watari.methods.ingest :as ingest]))
 
 #?(:clj (def ^:private batch-path
-          (-> *file* io/file .getAbsoluteFile .getParentFile .getParentFile
-              (io/file "data" "ingest" "sample-batch.json"))))
+          (io/file "wire" "ingest" "sample-batch.json")))
 
 #?(:clj (defn- batch [] (ingest/load-json batch-path)))
 

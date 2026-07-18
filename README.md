@@ -26,11 +26,11 @@ sea-and-sky passage. Lineage with **watatsumi 綿津見** (sea body) and **watat
 
 ```bash
 # analyze the bounded :representative seed → situational report + derived datoms
-python3 methods/analyze.py
+bb -m watari.methods.analyze.cljc
 #   → out/intel-report.md  +  out/movement-situation.kotoba.edn
 
 # normalize a public AIS/ADS-B batch (offline; live fetch is G7-gated)
-python3 methods/ingest.py --batch data/ingest/sample-batch.json
+bb -m watari.methods.ingest.cljc --batch wire/ingest/sample-batch.json
 ```
 
 ## What it computes (aggregate-first)
@@ -45,9 +45,9 @@ python3 methods/ingest.py --batch data/ingest/sample-batch.json
 ## Layout
 
 ```
-20-actors/watari/
+com-etzhayyim-watari/
 ├── CLAUDE.md          # actor-local rules (read repo-root CLAUDE.md first)
-├── manifest.jsonld    # DID, cells, lexicons, 9 gates, 6 non-goals
+├── manifest.edn    # DID, cells, lexicons, 9 gates, 6 non-goals
 ├── data/
 │   └── seed-craft-graph.kotoba.edn   # bounded :representative seed (13 craft, 26 fixes, 9 lanes)
 ├── methods/
@@ -56,7 +56,7 @@ python3 methods/ingest.py --batch data/ingest/sample-batch.json
 └── out/               # generated: intel-report.md + movement-situation.kotoba.edn
 ```
 
-## Gates (manifest.jsonld for full text)
+## Gates (manifest.edn for full text)
 
 G1 public broadcasts only · **G2 situational, not surveillance/targeting** · G3 aggregate-first ·
 **G4 no person-tracking / no pattern-of-life** · G5 sourcing honesty (no fabricated coverage) ·
